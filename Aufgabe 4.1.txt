@@ -1,0 +1,35 @@
+a) Vorteile JSON: JSON ist einfacher zu verstehen als XML; JSON stellt ein gültiges JavaScript dar welches direkt ausgeführt und somit in ein Javascript-Objekt überführt wird wodurch das zugreifen auf die einzel-Eigenschaften durch normale Attributzugriffe ermöglicht wird; Leichtgewichtig und unkompliziert
+
+Vorteile XML: leichter lesbar, weiter verbreitet, erweiterbar und komfortabeler um Daten mit dritten auszutauschen
+
+b)
+{"course": 
+	{"name": [
+		{"-lang": "English",
+		"#text": "Computer Networks I"
+		},
+
+		{"-lang": "German",
+		"#text": " Netzwerke I "
+		}],
+
+	"typ": " L",
+
+	"member": [
+		{"id": "1400",
+		"firstname": "Markus",
+		"lastname": "Mustermann"
+		},
+
+		{"id": " 1401 ",
+		"firstname": "Bart",
+		"lastname": "Simpson"
+		}],
+
+	"location":
+		{"-room": "R0.006",
+		"-street": "Lothstr. 64",
+		"-city": "Munich"
+		}
+	}
+}
