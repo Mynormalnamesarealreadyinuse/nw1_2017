@@ -1,0 +1,14 @@
+Person1
+Start, Lothstraﬂe 64
+Ziel, Lothstraﬂe 20
+Verkehrsmittel, Auto
+
+Person2
+Start, Lothstraﬂe 64
+Ziel, Lothstraﬂe 20
+Verkehrsmittel, Auto
+
+Person3
+Start, Lothstraﬂe 64
+Ziel, Lothstraﬂe 20
+Verkehrsmittel, Auto
