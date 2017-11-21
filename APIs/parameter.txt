@@ -1,14 +1,17 @@
 Person1
+Arbeitsbeginn, 09:00
 Start, Lothstraﬂe 64
 Ziel, Lothstraﬂe 20
 Verkehrsmittel, Auto
 
 Person2
+Arbeitsbeginn, 09:00
 Start, Lothstraﬂe 64
 Ziel, Lothstraﬂe 20
 Verkehrsmittel, Auto
 
 Person3
+Arbeitsbeginn, 09:00
 Start, Lothstraﬂe 64
 Ziel, Lothstraﬂe 20
 Verkehrsmittel, Auto
