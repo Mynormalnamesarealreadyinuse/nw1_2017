@@ -1,17 +1,17 @@
-Person1
+Person 1
 Arbeitsbeginn, 09:00
 Start, Lothstraße 64
 Ziel, Lothstraße 20
 Verkehrsmittel, Auto
 
-Person2
-Arbeitsbeginn, 09:00
+Person 2
+Arbeitsbeginn, 10:00
 Start, Lothstraße 64
 Ziel, Lothstraße 20
-Verkehrsmittel, Auto
+Verkehrsmittel, zu Fuß
 
-Person3
-Arbeitsbeginn, 09:00
+Person 3
+Arbeitsbeginn, 11:24
 Start, Lothstraße 64
 Ziel, Lothstraße 20
-Verkehrsmittel, Auto
+Verkehrsmittel, Fahrrad
