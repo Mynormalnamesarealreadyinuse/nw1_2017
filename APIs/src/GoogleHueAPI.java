@@ -6,13 +6,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 
 public class GoogleHueAPI {
 	
     public static final String host = "www.google.de";
     public static final String API_KEY = "AIzaSyDMSLeqkP1k-rgL9Zh_Ah1p_BXFklrjHH8";
-    public static ArrayList<String> arrivalTimes = new ArrayList<String>();
+    public static ArrayList<LocalTime> arrivalTimes = new ArrayList<LocalTime>();
     public static ArrayList<String> origins = new ArrayList<String>();
     public static ArrayList<String> destinations = new ArrayList<String>();
     public static ArrayList<String> vehicles = new ArrayList<String>();
@@ -21,19 +24,30 @@ public class GoogleHueAPI {
     
 	public static void main(String[] args){
 		readParameters();
-//		System.out.println(arrivalTimes.toString());
-//		System.out.println(origins.toString());
-//		System.out.println(destinations.toString());
-//		System.out.println(vehicles.toString());
 		
 		GoogleHueAPI client = new GoogleHueAPI();
 		
 		while (true) {
-			for (int personIndex = 0; personIndex < 3; personIndex++) {
-				String url = buildURL(personIndex);
-				client.doRequest(url);
+			for (int i = 0; i < 3; i++) {
+				String url = buildURL(i);
+				client.doRequest(url, i);
+				
+				LocalTime timeNow = LocalTime.now();
+				LocalTime departureTime = arrivalTimes.get(i).minusMinutes(Long.parseLong(travelTimes.get(i)));
+				boolean timeExceeded = false;
+				if (timeNow.plusMinutes(Long.parseLong(travelTimes.get(i))).isAfter(arrivalTimes.get(i))) {
+					timeExceeded = true;
+				}
+				long remainingTime = timeNow.until(departureTime, ChronoUnit.MINUTES);
+				
+				System.out.println("jetzige Zeit: " + timeNow);
+				System.out.println("Arbeitsbeginn: " + arrivalTimes.get(i));
+				System.out.println("Reisezeit: " + travelTimes.get(i) + " Minuten");
+				System.out.println("Abfahrtszeit: " + departureTime);
+				System.out.println("Zeit überschritten: " + timeExceeded);
+				System.out.println("verbleibende Zeit: " + remainingTime);
 			}
-//			System.out.println(travelTimes.toString());
+			
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
@@ -44,7 +58,7 @@ public class GoogleHueAPI {
 	}
 	
 
-	public void doRequest(String url){
+	public void doRequest(String url, int i){
 		try(InputStream input = 
 				new URL(url).openStream();
 				BufferedReader fromServer =
@@ -59,7 +73,7 @@ public class GoogleHueAPI {
 					int indexStart = line.indexOf("\"text\" : \"") + 10;
 					int indexEnd = line.indexOf(" mins\"");
 					String travelTime = line.substring(indexStart, indexEnd);
-					travelTimes.add(travelTime);
+					travelTimes.add(i, travelTime);
 				}
 			}
 			
@@ -90,7 +104,8 @@ public class GoogleHueAPI {
 			for (String line = br.readLine(); line != null; line = br.readLine()) {
 				if (line.contains("Arbeitsbeginn")) {
 					String arrivalTime = line.substring(15);
-					arrivalTimes.add(arrivalTime);
+					LocalTime arrivalTimeObject = LocalTime.parse(arrivalTime);
+					arrivalTimes.add(arrivalTimeObject);
 				}
 				if (line.contains("Start")) {
 					String origin = line.substring(7);
