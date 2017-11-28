@@ -16,29 +16,31 @@ public class GoogleHueAPI {
     public static ArrayList<String> origins = new ArrayList<String>();
     public static ArrayList<String> destinations = new ArrayList<String>();
     public static ArrayList<String> vehicles = new ArrayList<String>();
+    public static ArrayList<String> travelTimes = new ArrayList<String>();
     
     
 	public static void main(String[] args){
 		readParameters();
-		String url = buildURL();
-		System.out.println(arrivalTimes.toString());
-		System.out.println(origins.toString());
-		System.out.println(destinations.toString());
-		System.out.println(vehicles.toString());
+//		System.out.println(arrivalTimes.toString());
+//		System.out.println(origins.toString());
+//		System.out.println(destinations.toString());
+//		System.out.println(vehicles.toString());
 		
 		GoogleHueAPI client = new GoogleHueAPI();
-		client.doRequest(url);
-	}
-	
-	
-	private static String buildURL() {
-		String url = "";
-		url += "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&";
-		url += "origins=Lothstrasse+64,Muenchen&";
-		url += "destinations=Westendstrasse+2,Muenchen&";
-		url += "mode=transit&";
-		url += "key=" + API_KEY;
-		return url;
+		
+		while (true) {
+			for (int personIndex = 0; personIndex < 3; personIndex++) {
+				String url = buildURL(personIndex);
+				client.doRequest(url);
+			}
+//			System.out.println(travelTimes.toString());
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 	
 
@@ -51,9 +53,15 @@ public class GoogleHueAPI {
 										input))){
 			
 			for(String line = fromServer.readLine(); line != null /*&& line.length()>0*/; line = fromServer.readLine()){
+				
 				System.out.println(line);
+				if (line.contains("mins")) {
+					int indexStart = line.indexOf("\"text\" : \"") + 10;
+					int indexEnd = line.indexOf(" mins\"");
+					String travelTime = line.substring(indexStart, indexEnd);
+					travelTimes.add(travelTime);
+				}
 			}
-			
 			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -63,6 +71,17 @@ public class GoogleHueAPI {
 		
 	}
 
+	
+	private static String buildURL(int personIndex) {
+		String url = "";
+		url += "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&";
+		url += "origins=" + origins.get(personIndex).replace(" ", "+") + ",Muenchen&";
+		url += "destinations=" + destinations.get(personIndex).replace(" ", "+") + ",Muenchen&";
+		url += "mode="+ vehicles.get(personIndex) + "&";
+		url += "key=" + API_KEY;
+		return url;
+	}
+	
 	
 	private static void readParameters() {
 		String filepath = "parameter.txt";
@@ -83,7 +102,18 @@ public class GoogleHueAPI {
 				}
 				if (line.contains("Verkehrsmittel")) {
 					String vehicle = line.substring(16);
-					vehicles.add(vehicle);
+					if (vehicle.equals("Auto")) {
+						vehicles.add("driving");
+					}
+					else if (vehicle.equals("zu Fuß")) {
+						vehicles.add("walking");
+					}
+					else if (vehicle.equals("Fahrrad")) {
+						vehicles.add("bicycling");
+					}
+					else if (vehicle.equals("öffentlich")) {
+						vehicles.add("transit");
+					}
 				}
 //				System.out.println(line);
 			}
