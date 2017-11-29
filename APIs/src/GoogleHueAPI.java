@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class GoogleHueAPI {
 	
-    public static final String host = "www.google.de";
     public static final String API_KEY = "AIzaSyDMSLeqkP1k-rgL9Zh_Ah1p_BXFklrjHH8";
     public static ArrayList<LocalTime> arrivalTimes = new ArrayList<LocalTime>();
     public static ArrayList<String> origins = new ArrayList<String>();
