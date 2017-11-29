@@ -8,7 +8,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 
 public class GoogleHueAPI {
@@ -26,8 +25,11 @@ public class GoogleHueAPI {
 		readParameters();
 		
 		GoogleHueAPI client = new GoogleHueAPI();
+		HUE hue = new HUE();
+		hue.initialize();
 		
 		while (true) {
+			// index i steht für eine Person
 			for (int i = 0; i < 3; i++) {
 				String url = buildURL(i);
 				client.doRequest(url, i);
@@ -46,6 +48,8 @@ public class GoogleHueAPI {
 				System.out.println("Abfahrtszeit: " + departureTime);
 				System.out.println("Zeit überschritten: " + timeExceeded);
 				System.out.println("verbleibende Zeit: " + remainingTime);
+				
+				hue.setLights(i, timeExceeded, remainingTime);
 			}
 			
 			try {
