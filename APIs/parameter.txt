@@ -1,17 +1,17 @@
 Person 1
-Arbeitsbeginn, 00:55
+Arbeitsbeginn, 22:34
 Start, Lothstrasse 64
 Ziel, Westendstrasse 20
-Verkehrsmittel, Auto
+Verkehrsmittel, öffentlich
 
 Person 2
-Arbeitsbeginn, 00:55
+Arbeitsbeginn, 22:35
 Start, Lothstrasse 64
 Ziel, Westendstrasse 20
-Verkehrsmittel, zu Fuß
+Verkehrsmittel, öffentlich
 
 Person 3
-Arbeitsbeginn, 00:55
+Arbeitsbeginn, 22:34
 Start, Lothstrasse 64
 Ziel, Westendstrasse 20
 Verkehrsmittel, öffentlich

@@ -39,14 +39,14 @@ public class GoogleHueAPI {
 				if (timeNow.plusMinutes(Long.parseLong(travelTimes.get(i))).isAfter(arrivalTimes.get(i))) {
 					timeExceeded = true;
 				}
-				long remainingTime = timeNow.until(departureTime, ChronoUnit.MINUTES);
+				long remainingTime = timeNow.until(departureTime, ChronoUnit.SECONDS);
 				
 				System.out.println("jetzige Zeit: " + timeNow);
 				System.out.println("Arbeitsbeginn: " + arrivalTimes.get(i));
 				System.out.println("Reisezeit: " + travelTimes.get(i) + " Minuten");
 				System.out.println("Abfahrtszeit: " + departureTime);
 				System.out.println("Zeit überschritten: " + timeExceeded);
-				System.out.println("verbleibende Zeit: " + remainingTime);
+				System.out.println("verbleibende Zeit: " + remainingTime + " Sekunden");
 				
 				hue.setLights(i, timeExceeded, remainingTime);
 			}
